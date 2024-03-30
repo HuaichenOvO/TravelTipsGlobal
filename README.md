@@ -2,7 +2,7 @@
 
 The website is run on [Firebase deployment](https://traveltip-3ec28.web.app/).
 
-A detailed explanation can be found [here](https://docs.google.com/document/d/1K7ydgHkuluqRMtHdqvjduUy-H-t1VDItXyiKeXczgRQ/edit?usp=sharing).
+A detailed explanation on business design can be found [here](https://docs.google.com/document/d/1K7ydgHkuluqRMtHdqvjduUy-H-t1VDItXyiKeXczgRQ/edit?usp=sharing).
 
 # How to run
 
