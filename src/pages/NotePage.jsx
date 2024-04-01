@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, } from 'react-router-dom';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, doc, addDoc, getDocs, deleteDoc } from 'firebase/firestore';
 import db from "../../db.js";
 
-import Navbar from "../components/Navbar.jsx";
+import Navbar from '../components/Navbar.jsx';
 import Note from '../components/Note.jsx';
-
+import PopupWindow from '../components/PopupWindow.jsx';
 
 export default function NotePage() {
-    const navigate = useNavigate();
-    const [note, setNote] = useState(null);
+    const [refresh, setRefresh] = useState(null);
+    const [notes, setNotes] = useState(null);
     const [pageID, setPageID] = useState(null);
     const location = useLocation();
     const { hash, pathname, search } = location;
@@ -24,12 +24,13 @@ export default function NotePage() {
             }
             let tmpPageID = parseInt(pathname.slice(6));
             setPageID(tmpPageID);
-            const q = query(collection(db, "Note"), where("CID", "==", pageID));
-            resolve(q);
+            resolve(tmpPageID);
         })
 
         fetchNotePromise
-            .then((q) => {
+            .then((tmpPageID) => {
+                // console.log(tmpPageID)
+                const q = query(collection(db, "Note"), where("CID", "==", tmpPageID));
                 const res = getDocs(q)
                 // console.log(res)
                 return res
@@ -37,39 +38,47 @@ export default function NotePage() {
             .then((docSnapshot) => {
                 let noteArray = []
                 if (docSnapshot !== undefined) {
-                    console.log(docSnapshot.docs)
+                    // console.log(docSnapshot.docs)
                     noteArray = docSnapshot.docs.map(
-                        doc => <Note key={doc.id} CID={doc.data().CID} content={doc.data().content} />
+                        doc => <Note key={doc.id} docID={doc.id} data={doc.data()} onDeleteNote={onDeleteNote} />
                     )
                 }
                 return noteArray
             })
             .then(
-                (noteArray) => setNote(noteArray)
+                (noteArray) => setNotes(noteArray)
             )
-
-
             .catch(err => console.error("Error", err))
+    }, [refresh]);
 
+    const onSubmitNote = async (obj) => {
+        obj = { ...obj, CID: pageID }
+        const docRef = await addDoc(collection(db, "Note"), obj);
+        console.log("Document written with ID: ", docRef.id);
+        setRefresh(docRef.id + '1');
+    }
 
-
-    }, []);
-
-    // console.log(location);
+    const onDeleteNote = async (docID) => {
+        console.log(docID);
+        await deleteDoc(doc(db, "Note", docID));
+        setRefresh(docID + '2');
+    }
 
     return (
-        <div>
+        <div className='row'>
             <Navbar />
-            {note ? (
+            <div>
+                <PopupWindow onSubmitObject={onSubmitNote} />
+            </div>
+            {notes ? (
                 <div className="row">
-                    {note}
+                    {notes}
                 </div>
             ) : (
                 <p>Loading note...</p>
             )}
-            <p>Current path: {pathname}</p>
-            <p>Current index: {pageID}</p>
-            <button onClick={() => navigate("/")}>Jump to home page</button>
+
+            <footer style={{ position: "fixed", bottom: "0", left: "0" }}>Current path: {pathname} | Current index: {pageID}</footer>
         </div>
     );
 }

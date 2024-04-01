@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import db from '../../db.js';
 import { useNavigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { collection, getDocs } from 'firebase/firestore';
-import mapboxgl from 'mapbox-gl';
-import db from '../../db.js';
 import { Marker } from './Marker.jsx';
 
-export default function GenWorldMap() {
+export default function GenWorldMap({ refreshTrigger }) {
     const navigate = useNavigate();
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [parks, setParks] = useState([]);
-    const [lng, setLng] = useState(-87.9);
-    const [lat, setLat] = useState(41.35);
-    const [zoom, setZoom] = useState(9);
-
-    const [clickedLng, setClickedLng] = useState(0);
-    const [clickedLat, setClickedLat] = useState(0);
+    const [lng, setLng] = useState(-101);
+    const [lat, setLat] = useState(30);
+    const [zoom, setZoom] = useState(2);
 
     const TOKEN = 'pk.eyJ1Ijoia2FpLWxpbiIsImEiOiJjbHVhdnlyejIwb2I3Mml0NWdxNjlub3kzIn0.1rOhREHHqBtilP4tyK9viw';
 
@@ -27,7 +23,6 @@ export default function GenWorldMap() {
     useEffect(() => {
         if (map.current !== null) return;
 
-        let cityArray = [];
         const fetchDocs = new Promise((resolve, reject) => {
             if (map.current !== null) {
                 console.log("Map is not null");
@@ -41,11 +36,6 @@ export default function GenWorldMap() {
         fetchDocs
             .then((querySnapshot) => {
                 return querySnapshot.docs.map(it => it.data());
-            })
-            .then((cityArray) => {
-                // set state will not finish until the effect ends?
-                setParks(cityArray);
-                return cityArray
             })
             .then((cityArray) => {
                 map.current = new mapboxgl.Map({
@@ -118,28 +108,18 @@ export default function GenWorldMap() {
                     setZoom(map.current.getZoom().toFixed(2));
                 });
 
-                map.current.on('click', (e) => {
-                    setClickedLng(e.lngLat.lng.toFixed(4));
-                    setClickedLat(e.lngLat.lat.toFixed(4));
-                    // console.log(`A click event has occurred at`, e.lngLat)
-                })
-
                 map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
             })
 
         return () => { map.current = null };
-    }, []);
+    }, [refreshTrigger]);
 
     return (
         <div className="row">
-            {/* <div>{parks.map((it) => it.properties.title)}</div> */}
             <div ref={mapContainer} className="map-container" />
             <p className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </p>
-            {/* <p className="sidebar">
-                Clicked: {clickedLng} | Clicked: {clickedLat}
-            </p> */}
         </div>
     );
 
