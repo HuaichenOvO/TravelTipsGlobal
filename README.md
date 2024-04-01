@@ -1,5 +1,21 @@
 # TravelTipsGlobal
 
+The website is run on [Firebase deployment](https://traveltip-3ec28.web.app/).
+
+A detailed explanation on business design can be found [here](https://docs.google.com/document/d/1K7ydgHkuluqRMtHdqvjduUy-H-t1VDItXyiKeXczgRQ/edit?usp=sharing).
+
+# How to run
+
+```
+  git clone https://github.com/HuaichenOvO/TravelTipsGlobal.git
+
+  cd TravelTipsGlobal
+
+  npm install
+
+  npm run dev
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
