@@ -10,8 +10,8 @@ export default function GenWorldMap({ refreshTrigger }) {
     const navigate = useNavigate();
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(-101);
-    const [lat, setLat] = useState(30);
+    const [lng, setLng] = useState(-122.419);
+    const [lat, setLat] = useState(37.779);
     const [zoom, setZoom] = useState(2);
 
     const TOKEN = 'pk.eyJ1Ijoia2FpLWxpbiIsImEiOiJjbHVhdnlyejIwb2I3Mml0NWdxNjlub3kzIn0.1rOhREHHqBtilP4tyK9viw';
