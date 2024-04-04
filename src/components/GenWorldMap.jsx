@@ -16,7 +16,7 @@ export default function GenWorldMap({ refreshTrigger }) {
 
     const TOKEN = 'pk.eyJ1Ijoia2FpLWxpbiIsImEiOiJjbHVhdnlyejIwb2I3Mml0NWdxNjlub3kzIn0.1rOhREHHqBtilP4tyK9viw';
 
-    const LOGO = './src/assets/location_resize.png';
+    const LOGO = '/location_resize.png';
 
     mapboxgl.accessToken = TOKEN;
 
