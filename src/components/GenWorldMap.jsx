@@ -14,14 +14,15 @@ export default function GenWorldMap({ refreshTrigger }) {
     const [lat, setLat] = useState(37.779);
     const [zoom, setZoom] = useState(2);
 
+    const LAYERID = "LAYER";
     const TOKEN = 'pk.eyJ1Ijoia2FpLWxpbiIsImEiOiJjbHVhdnlyejIwb2I3Mml0NWdxNjlub3kzIn0.1rOhREHHqBtilP4tyK9viw';
-
     const LOGO = '/location_resize.png';
 
     mapboxgl.accessToken = TOKEN;
 
     useEffect(() => {
         if (map.current !== null) return;
+        // console.log('Start to run')
 
         const fetchDocs = new Promise((resolve, reject) => {
             if (map.current !== null) {
@@ -81,9 +82,6 @@ export default function GenWorldMap({ refreshTrigger }) {
                         }
                     );
                 });
-                return cityArray;
-            })
-            .then((cityArray) => {
                 // Render custom marker components
                 cityArray.forEach((feature) => {
                     // Create a React ref
@@ -111,7 +109,11 @@ export default function GenWorldMap({ refreshTrigger }) {
                 map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
             })
 
-        return () => { map.current = null };
+        return () => {
+            // if (map.current) map.current.removeLayer(LAYERID);
+            // map.current.removeImage("custom-marker");
+            map.current = null;
+        };
     }, [refreshTrigger]);
 
     return (

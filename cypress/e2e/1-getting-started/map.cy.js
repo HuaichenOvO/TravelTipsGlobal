@@ -1,3 +1,7 @@
+// import db from "../../../db"
+// import mapboxgl from 'mapbox-gl';
+// import React, { useState, useEffect, useRef } from 'react';
+
 /// <reference types="cypress" />
 
 // Welcome to Cypress!
@@ -21,18 +25,22 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // errors, so we let them fail the test
 })
 
-describe('Test package imported sucessfully', () => {
+describe('Test map initialized sucessfully', () => {
     beforeEach(() => {
-        // Cypress starts out with a blank slate for each test
-        // so we must tell it to visit our website with the `cy.visit()` command.
-        // Since we want to visit the same URL at the start of all our tests,
-        // we include it in our beforeEach function so that it runs before each test
+        //     // Cypress starts out with a blank slate for each test
+        //     // so we must tell it to visit our website with the `cy.visit()` command.
+        //     // Since we want to visit the same URL at the start of all our tests,
+        //     // we include it in our beforeEach function so that it runs before each test
         cy.visit('http://localhost:5173/')
     })
 
-    it("There is a nav element", () => {
+    it("There is a map element", () => {
         // cy.get
-        const map = cy.get("#root > div > div > div").should("exist");
+        const mapMarker = ".mapboxgl-marker";
+        // const mapCSS = ".sidebar";
+
+        // const map = cy.get("#root > div > div > div").should("be visible");
+        const map = cy.get(mapCSS).should("be.visible");
 
         map.dblclick("center", { waitForAnimations: true });
     })
