@@ -4,6 +4,8 @@ The website is run on [Firebase deployment](https://traveltip-3ec28.web.app/).
 
 A detailed explanation of business design can be found [here](https://docs.google.com/document/d/1K7ydgHkuluqRMtHdqvjduUy-H-t1VDItXyiKeXczgRQ/edit?usp=sharing).
 
+The test demo can be view [here](https://drive.google.com/file/d/12ap9UKnjBhD_jwbOUwOPELGW0R3V_gcv/view?usp=drive_link)
+
 # Test Cases
 
 1. Tested the navbar's existence
@@ -14,6 +16,7 @@ A detailed explanation of business design can be found [here](https://docs.googl
 
 # How to run
 
+- In one terminal
 ```
   git clone https://github.com/HuaichenOvO/TravelTipsGlobal.git
 
@@ -22,6 +25,13 @@ A detailed explanation of business design can be found [here](https://docs.googl
   npm install
 
   npm run dev
+
+  npm install cypress --save-dev // install locally for one-time usage
+```
+
+- In another terminal
+```
+  npx cypress open
 ```
 
 # React + Vite
