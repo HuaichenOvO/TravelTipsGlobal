@@ -1,16 +1,16 @@
-# TravelTipsGlobal
+# TravelTipsGlobal | Test in CyPress
 
 The website is run on [Firebase deployment](https://traveltip-3ec28.web.app/).
 
 A detailed explanation of business design can be found [here](https://docs.google.com/document/d/1K7ydgHkuluqRMtHdqvjduUy-H-t1VDItXyiKeXczgRQ/edit?usp=sharing).
 
-# Features
+# Test Cases
 
-1. A home page with a global map and a search box that can add cities as thumbtacks to the map.
+1. Tested the navbar's existence
 
-2. A note page that can be entered by clicking the thumbtack. Each city corresponds to a note page.
+2. Tested the remote-loaded map component has a specific style to ensure the successful loading
 
-3. Both the cities and notes are stored in the online database and therefore support online CRUD. (Deleting a city is not supported yet.)
+3. Tested the return result of the search box, to ensure Firebase connection is successfully setup
 
 # How to run
 
